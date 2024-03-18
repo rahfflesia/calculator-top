@@ -19,7 +19,7 @@ function addToScreen(event) {
     if(calculatorInput.value === "Error" || calculatorInput.value === "Syntax error"){
         clearScreen();
     }
-    if(buttonValue === '.' && calculatorInput.value.includes('.')){
+    else if(buttonValue === '.' && calculatorInput.value.includes('.')){
         return;
     }
     calculatorInput.value += buttonValue;
