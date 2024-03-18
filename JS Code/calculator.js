@@ -11,6 +11,7 @@ let secondNumber = '';
 let deleteButton = document.querySelector('.delete');
 let decimalPoint = document.querySelector('.point');
 let result;
+let fixedResult;
 
 function addToScreen(event) {
     let buttonValue = event.target.textContent;
@@ -41,7 +42,7 @@ clear.addEventListener('click', function(){
 })
 
 function sumfunc(a, b){
-    return parseFloat(a) + parseFloat(b);
+    return a + b;
 }
 
 function subfunc(a, b){
@@ -53,37 +54,48 @@ function mulfunc(a, b){
 }
 
 function divfunc(a , b){
+    let result;
     if(b === 0){
         document.querySelector('.numbers-screen').value = "Error";
     }
     else {
-        return a / b;
+        result = a / b;
+        result = (Math.round(result * 1e6) / 1e6);
     }
+    return result;
 }
 
-sum.addEventListener('click', () => {
+function sumEvent(){
     firstNumber = parseFloat(document.querySelector('.numbers-screen').value);
     clearScreen();
     operator = '+';
-});
+}
 
-substraction.addEventListener('click', () => {
+function substractionEvent(){
     firstNumber = parseFloat(document.querySelector('.numbers-screen').value);
     clearScreen();
     operator = '-';
-});
+}
 
-multiplication.addEventListener('click', () => {
+function multiplicationEvent(){
     firstNumber = parseFloat(document.querySelector('.numbers-screen').value);
     clearScreen();
     operator = '*';
-});
+}
 
-division.addEventListener('click', () => {
+function divisionEvent(){
     firstNumber = parseFloat(document.querySelector('.numbers-screen').value);
     clearScreen();
     operator = '/';
-});
+}
+
+sum.addEventListener('click', sumEvent);
+
+substraction.addEventListener('click', substractionEvent);
+
+multiplication.addEventListener('click', multiplicationEvent);
+
+division.addEventListener('click', divisionEvent);
 
 function operate(operator){
     secondNumber = parseFloat(document.querySelector('.numbers-screen').value);
@@ -107,7 +119,7 @@ function operate(operator){
                     document.querySelector('.numbers-screen').value = result.toString();
                     break;
                 case '/':
-                    result = divfunc(firstNumber, secondNumber).toFixed(6);
+                    result = divfunc(firstNumber, secondNumber);
                     document.querySelector('.numbers-screen').value = result.toString();
                     break;
                 default:
@@ -147,5 +159,17 @@ document.addEventListener('keydown', (event) => {
         else{
             document.querySelector('.numbers-screen').value += keyPressed;
         }
+    }
+    else if(keyPressed === "+"){
+        sumEvent();
+    }
+    else if(keyPressed === "-"){
+        substractionEvent();
+    }
+    else if(keyPressed === "*"){
+        multiplicationEvent();
+    }
+    else if(keyPressed === "/"){
+        divisionEvent();
     }
 });
